@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const loginSection = document.getElementById('login-section');
     const dashboardSection = document.getElementById('dashboard-section');
@@ -11,22 +10,60 @@ document.addEventListener('DOMContentLoaded', () => {
     let authToken = null;
 
     // --- LOGIN LOGIC ---
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        loginError.textContent = ""; // Clear previous errors
         const password = document.getElementById('password').value;
-        // This password will be checked by the backend.
-        // For the frontend, we just store it to send with requests.
-        authToken = password; 
-        loginSection.style.display = 'none';
-        dashboardSection.style.display = 'block';
-        loadExistingDates();
+
+        if (!password) {
+            loginError.textContent = "Please enter a password.";
+            return;
+        }
+
+        try {
+            // Call the new /api/login endpoint to verify the password
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ password: password })
+            });
+
+            if (response.ok) {
+                // If login is successful (status 200 OK)
+                authToken = password; // Store the password for subsequent API calls
+                console.log("Login successful. Hiding login section, showing dashboard.");
+                loginSection.style.display = 'none';
+                dashboardSection.style.display = 'block';
+                loadExistingDates();
+            } else {
+                // If login fails (e.g., 401 Unauthorized)
+                const errorData = await response.json();
+                loginError.textContent = errorData.error || "Login failed. Please try again.";
+            }
+        } catch (error) {
+            console.error("Login API call failed:", error);
+            loginError.textContent = "An error occurred during login. Please check the console.";
+        }
     });
 
     // --- LOAD EXISTING DATES ---
     async function loadExistingDates() {
+        existingDatesList.innerHTML = '<p>Loading dates...</p>';
+        if (!authToken) {
+            console.error("Auth token is not set. Cannot load dates.");
+            existingDatesList.innerHTML = `<p style="color: red;">Error: Not logged in.</p>`;
+            return;
+        }
+        
         try {
+            // We use the public endpoint to get dates, which doesn't require auth
             const response = await fetch('/api/get_dates');
-            if (!response.ok) throw new Error('Failed to fetch dates');
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch dates. Status: ${response.status}`);
+            }
             
             const dates = await response.json();
             existingDatesList.innerHTML = '';
@@ -36,13 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
+            // Sort dates client-side
             dates.sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
 
             dates.forEach(date => {
                 const div = document.createElement('div');
                 div.className = 'date-entry';
-                const eventDate = new Date(date.event_date);
-                const formattedDate = `${eventDate.getUTCMonth() + 1}/${eventDate.getUTCDate()}/${eventDate.getUTCFullYear()}`;
+                // Handle potential timezone issues by creating date in UTC
+                const eventDate = new Date(date.event_date + 'T00:00:00Z');
+                const formattedDate = eventDate.toLocaleDateString('en-US', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit' });
                 
                 div.innerHTML = `
                     <span>${formattedDate} - ${date.venue}, ${date.city}</span>
@@ -52,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
         } catch (error) {
+            console.error("Error loading dates:", error);
             existingDatesList.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
         }
     }
@@ -79,13 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.status === 401) {
-                formMessage.style.color = 'red';
-                formMessage.textContent = 'Authentication failed. Incorrect password.';
-                return;
+                throw new Error('Authentication failed. The password may be incorrect.');
             }
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to add date');
+                const errorData = await response.json().catch(() => ({ error: 'An unknown error occurred' }));
+                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
             }
 
             formMessage.style.color = 'lightgreen';
@@ -116,12 +154,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.status === 401) {
-                    alert('Authentication failed. Incorrect password.');
-                    return;
+                     throw new Error('Authentication failed. The password may be incorrect.');
                 }
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Failed to delete date');
+                    const errorData = await response.json().catch(() => ({ error: 'Failed to delete' }));
+                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
                 }
 
                 alert('Date deleted successfully!');
