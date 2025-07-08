@@ -11,6 +11,40 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /* Basic styling for the new contact section */
+      #contact {
+        text-align: center;
+        padding: 50px 20px;
+        background-color: #111; /* A light background to separate the section */
+      }
+      #contact h2 {
+        margin-bottom: 15px;
+        font-size: 2em;
+      }
+      #contact p {
+        margin-bottom: 30px;
+        color: #666;
+        font-family: "Roboto", sans-serif;
+      }
+      .social-links a {
+        color: #fff; /* Icon color */
+        font-size: 2.5rem; /* Icon size */
+        margin: 0 20px; /* Spacing between icons */
+        text-decoration: none;
+        transition: color 0.3s ease; /* Smooth transition for hover effect */
+      }
+      .social-links a:hover {
+        color: forestgreen; /* Color on hover */
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -25,23 +59,44 @@
     <main>
       <section id="hero">
         <div class="hero-content">
-          <h2>New Single "Only her..." is out!</h2>
-          <a href="#" class="cta-button">Listen on Spotify</a>
+          <h2>Single "Only her..." is out!</h2>
+          <a
+            href="https://open.spotify.com/track/2O39m9XGoNJc2VbriXSt0d?si=11b26a65b86e4de0"
+            class="cta-button"
+            >Listen on Spotify</a
+          >
         </div>
       </section>
 
       <section id="tour">
-        <h2>Upcoming Tour Dates</h2>
+        <h2>Upcoming Show Dates</h2>
         <div id="tour-dates-list">
-          <!-- Tour dates will be loaded here by JavaScript -->
-          <p class="loading">Loading tour dates...</p>
+          <p class="loading">Loading show dates...</p>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Get In Touch</h2>
+        <p>Follow my journey and connect with me on social media.</p>
+        <div class="social-links">
+          <a href="https://instagram.com" aria-label="Instagram" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://x.com/andrinoff1" aria-label="X" target="_blank"
+            ><i class="fab fa-x-twitter"></i
+          ></a>
+          <a href="mailto:music@andrinoff.com" aria-label="Email"
+            ><i class="fas fa-envelope"></i
+          ></a>
+          <a href="https://t.me/andrinoff" aria-label="Telegram" target="_blank"
+            ><i class="fab fa-telegram"></i
+          ></a>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>&copy; 2024 The Sonic Weavers. All Rights Reserved.</p>
-      <p><a href="/admin">Admin Login</a></p>
+      <p>© 2025 andrinoff (Drew Smirnoff). All Rights Reserved.</p>
     </footer>
 
     <script src="script.js"></script>

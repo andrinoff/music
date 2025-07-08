@@ -40,7 +40,7 @@ header nav a:hover {
 
 /* Hero Section */
 #hero {
-    background-image: url('https://placehold.co/1200x600/191414/FFFFFF?text=The+Sonic+Weavers');
+    background-image: url('favicon.png');
     background-size: cover;
     background-position: center;
     height: 70vh;
