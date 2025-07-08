@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Get all elements and store them in constants
     const loginSection = document.getElementById('login-section');
     const dashboardSection = document.getElementById('dashboard-section');
     const loginForm = document.getElementById('login-form');
@@ -6,6 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const addDateForm = document.getElementById('add-date-form');
     const formMessage = document.getElementById('form-message');
     const existingDatesList = document.getElementById('existing-dates-list');
+
+    // --- Robustness Check ---
+    // This check ensures the script is running on the correct admin page.
+    // If any of these core elements are missing, it stops execution.
+    if (!loginSection || !dashboardSection || !loginForm || !addDateForm || !existingDatesList) {
+        console.error("Admin Script Error: Essential HTML elements for the admin panel were not found. Please ensure you are on the correct admin page and that it is loading 'admin/script.js'.");
+        return; // Stop the script to prevent further errors.
+    }
 
     let authToken = null;
 
@@ -63,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- LOGIN LOGIC ---
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        loginError.textContent = ""; // Clear previous errors
+        if (loginError) loginError.textContent = ""; // Clear previous errors
         const password = document.getElementById('password').value;
 
         if (!password) {
