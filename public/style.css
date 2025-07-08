@@ -1,0 +1,170 @@
+/* General Body Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 1rem 2rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #1DB954; /* Spotify Green */
+}
+
+/* Hero Section */
+#hero {
+    background-image: url('https://placehold.co/1200x600/191414/FFFFFF?text=The+Sonic+Weavers');
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-content {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2rem 3rem;
+    border-radius: 10px;
+}
+
+.hero-content h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.cta-button {
+    background-color: #1DB954;
+    color: #fff;
+    padding: 12px 25px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 50px;
+    transition: background-color 0.3s, transform 0.3s;
+    display: inline-block;
+}
+
+.cta-button:hover {
+    background-color: #1ed760;
+    transform: scale(1.05);
+}
+
+/* Tour Section */
+#tour {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 4rem auto;
+    text-align: center;
+}
+
+#tour h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #1DB954;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+#tour-dates-list {
+    text-align: left;
+}
+
+.tour-item {
+    background: #1e1e1e;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid #1DB954;
+    transition: background-color 0.3s;
+}
+
+.tour-item:hover {
+    background-color: #282828;
+}
+
+.tour-info {
+    flex-grow: 1;
+}
+
+.tour-info .date {
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.tour-info .venue {
+    font-style: italic;
+    color: #b3b3b3;
+}
+
+.ticket-button {
+    background-color: transparent;
+    border: 1px solid #1DB954;
+    color: #1DB954;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    white-space: nowrap;
+}
+
+.ticket-button:hover {
+    background-color: #1DB954;
+    color: #fff;
+}
+
+.no-dates {
+    color: #b3b3b3;
+    font-style: italic;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: #000;
+    color: #666;
+    font-size: 0.9rem;
+}
+footer a {
+    color: #888;
+    text-decoration: none;
+}
+footer a:hover {
+    color: #fff;
+}
